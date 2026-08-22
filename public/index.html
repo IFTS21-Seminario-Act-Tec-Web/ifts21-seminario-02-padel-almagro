@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Padel Almagro | Canchas, clases y torneos</title>
+  <meta name="description" content="Padel Almagro: reservá tu cancha, conocé nuestras clases, torneos y servicios. Un espacio para disfrutar el pádel en comunidad.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Tipografías -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- =====================================================
+       Bootstrap 5 CSS — andamiaje estructural
+       Provee: grid (container/row/col), navbar, formularios,
+       botones base, utilidades de spacing y display.
+       ===================================================== -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- =====================================================
+       CSS personalizado — identidad visual de Padel Almagro
+       Las clases propias usan el prefijo pa-
+       ===================================================== -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <a class="pa-skip-link" href="#contenido">Saltar al contenido</a>
+
+
+  <!-- =====================================================
+       NAVBAR
+       Bootstrap: navbar navbar-expand-lg fixed-top
+         → colapso mobile automático, position fija
+       Custom: pa-navbar, pa-brand, pa-nav-link, pa-nav-cta
+         → transparente al inicio, verde oscuro al scrollear
+           (main.js agrega la clase .scrolled)
+       ===================================================== -->
+  <nav class="navbar navbar-expand-lg fixed-top pa-navbar" id="siteNav">
+    <div class="container">
+
+      <a class="navbar-brand pa-brand" href="#inicio" aria-label="Padel Almagro - Inicio">
+        <span class="pa-brand-mark"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+        <span class="pa-brand-text">PADEL <strong>ALMAGRO</strong></span>
+      </a>
+
+      <!-- Bootstrap maneja el collapse con data-bs-* -->
+      <button class="navbar-toggler pa-toggler" type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navLinks"
+              aria-controls="navLinks"
+              aria-expanded="false"
+              aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navLinks">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+          <li class="nav-item"><a class="nav-link pa-nav-link" href="#inicio"    data-section="inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link pa-nav-link" href="#servicios" data-section="servicios">Servicios</a></li>
+          <li class="nav-item"><a class="nav-link pa-nav-link" href="#precios"   data-section="precios">Precios</a></li>
+          <li class="nav-item"><a class="nav-link pa-nav-link" href="#galeria"   data-section="galeria">Galería</a></li>
+          <li class="nav-item"><a class="nav-link pa-nav-link" href="#contacto"  data-section="contacto">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link pa-nav-cta"  href="#reservas">Reservar ahora</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <main id="contenido">
+
+    <!-- ===================================================
+         HERO
+         Bootstrap: container, row align-items-end,
+           col-lg-8, col-lg-4 d-none d-lg-block
+         Custom: pa-hero, pa-hero-bg, pa-hero-overlay,
+           pa-hero-card, pa-hero-stats, pa-scroll-indicator
+         =================================================== -->
+    <section class="pa-hero" id="inicio">
+      <div class="pa-hero-bg" aria-hidden="true"></div>
+      <div class="pa-hero-overlay" aria-hidden="true"></div>
+
+      <div class="container pa-hero-content">
+        <div class="row align-items-end">
+
+          <div class="col-lg-8">
+            <span class="pa-eyebrow pa-eyebrow-light">
+              <i class="bi bi-geo-alt-fill"></i> Almagro · CABA
+            </span>
+            <h1>Tu lugar para<br>vivir el <span>pádel</span>.</h1>
+            <p>Canchas de primer nivel, clases para todos los niveles y una comunidad que disfruta cada partido.</p>
+            <div class="pa-hero-actions">
+              <a class="btn pa-btn pa-btn-primary" href="#reservas">
+                <i class="bi bi-calendar-check"></i> Reservar cancha
+              </a>
+              <a class="btn pa-btn pa-btn-outline" href="#servicios">
+                Conocé el club <i class="bi bi-arrow-down"></i>
+              </a>
+            </div>
+            <div class="pa-hero-stats">
+              <div><strong>4</strong><span>Canchas</span></div>
+              <div><strong>7–23</strong><span>Todos los días</span></div>
+              <div><strong>+5</strong><span>Años jugando</span></div>
+            </div>
+          </div>
+
+          <!-- Tarjeta de estado: oculta en mobile con d-none d-lg-block -->
+          <div class="col-lg-4 d-none d-lg-block">
+            <div class="pa-hero-card">
+              <span class="pa-status">
+                <i class="bi bi-circle-fill"></i> Abierto hoy
+              </span>
+              <strong>¿Jugamos?</strong>
+              <span>Reservá tu cancha en pocos pasos.</span>
+              <a href="#reservas">Ver cómo reservar <i class="bi bi-arrow-right"></i></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <a class="pa-scroll-indicator" href="#servicios" aria-label="Ir a servicios">
+        <span>Descubrí el club</span>
+        <i class="bi bi-chevron-down"></i>
+      </a>
+    </section>
+
+
+    <!-- ===================================================
+         SERVICIOS
+         Bootstrap: row g-3, col-lg-3 col-md-6
+           → 4 columnas desktop, 2 tablet, 1 mobile
+         Custom: pa-section, pa-service-card, pa-service-icon
+         =================================================== -->
+    <section class="pa-section pa-services" id="servicios">
+      <div class="container">
+
+        <div class="row align-items-end mb-5">
+          <div class="col-lg-7">
+            <span class="pa-eyebrow">Lo que hacemos</span>
+            <h2>Todo lo que necesitás<br><span>para disfrutar.</span></h2>
+          </div>
+          <div class="col-lg-5">
+            <p>Un club pensado para que vengas a jugar, aprender, competir y pasarla bien.</p>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-lg-3 col-md-6">
+            <article class="pa-service-card">
+              <div class="pa-service-icon"><i class="bi bi-grid-3x3-gap"></i></div>
+              <h3>Alquiler de canchas</h3>
+              <p>Reservá por hora y disfrutá nuestras canchas cubiertas con iluminación LED.</p>
+              <a href="#reservas">Reservar <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <article class="pa-service-card">
+              <div class="pa-service-icon"><i class="bi bi-person-video3"></i></div>
+              <h3>Clases</h3>
+              <p>Entrenamientos particulares y grupales para principiantes y jugadores avanzados.</p>
+              <a href="#contacto">Consultar <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <article class="pa-service-card">
+              <div class="pa-service-icon"><i class="bi bi-trophy"></i></div>
+              <h3>Torneos y ligas</h3>
+              <p>Competí, conocé gente y disfrutá de torneos y ligas durante todo el año.</p>
+              <a href="#contacto">Ver próximos <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <article class="pa-service-card">
+              <div class="pa-service-icon"><i class="bi bi-cup-hot"></i></div>
+              <h3>Bar & descanso</h3>
+              <p>Un espacio para compartir algo después del partido con tu equipo.</p>
+              <a href="#contacto">Conocer más <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         DESTACADO
+         Bootstrap: row align-items-center g-5, col-lg-6
+         Custom: pa-highlight, pa-highlight-image,
+           pa-check-list, pa-text-link
+         =================================================== -->
+    <section class="pa-highlight">
+      <div class="container">
+        <div class="row align-items-center g-5">
+
+          <div class="col-lg-6">
+            <div class="pa-highlight-image" role="img" aria-label="Cancha de pádel"></div>
+          </div>
+
+          <div class="col-lg-6">
+            <span class="pa-eyebrow">El club</span>
+            <h2>Más que una cancha.<br><span>Una comunidad.</span></h2>
+            <p>Abrimos nuestras puertas con una idea simple: crear un lugar donde el deporte y los vínculos fueran igual de importantes. Hoy somos una comunidad de jugadores de todos los niveles.</p>
+            <ul class="pa-check-list">
+              <li><i class="bi bi-check-circle-fill"></i> Canchas cubiertas</li>
+              <li><i class="bi bi-check-circle-fill"></i> Iluminación LED</li>
+              <li><i class="bi bi-check-circle-fill"></i> Vestuarios y duchas</li>
+              <li><i class="bi bi-check-circle-fill"></i> Profesores certificados</li>
+            </ul>
+            <a class="pa-text-link" href="#contacto">
+              Conocé más sobre nosotros <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         PRECIOS
+         Bootstrap: row g-3, col-lg-4 col-md-8,
+           justify-content-center align-items-center
+         Custom: pa-pricing, pa-price-card, pa-price-featured
+         =================================================== -->
+    <section class="pa-section pa-pricing" id="precios">
+      <div class="container">
+
+        <div class="text-center mb-5">
+          <span class="pa-eyebrow">Tarifas</span>
+          <h2>Elegí tu horario<br><span>y vení a jugar.</span></h2>
+          <p>Precios de referencia para trabajar en clase. El equipo podrá modificarlos.</p>
+        </div>
+
+        <div class="row g-3 justify-content-center align-items-center">
+
+          <div class="col-lg-4 col-md-8">
+            <article class="pa-price-card">
+              <span class="pa-price-label">Lunes a viernes</span>
+              <h3>Horario diurno</h3>
+              <div class="pa-price">$12.000 <small>/ hora</small></div>
+              <p>07:00 a 17:00 hs</p>
+              <a class="btn pa-btn pa-btn-dark" href="#reservas">Reservar</a>
+            </article>
+          </div>
+
+          <div class="col-lg-4 col-md-8">
+            <article class="pa-price-card pa-price-featured">
+              <span class="pa-popular">Más elegido</span>
+              <span class="pa-price-label">Lunes a viernes</span>
+              <h3>Horario tarde</h3>
+              <div class="pa-price">$16.000 <small>/ hora</small></div>
+              <p>17:00 a 23:00 hs</p>
+              <a class="btn pa-btn pa-btn-primary" href="#reservas">Reservar</a>
+            </article>
+          </div>
+
+          <div class="col-lg-4 col-md-8">
+            <article class="pa-price-card">
+              <span class="pa-price-label">Fines de semana</span>
+              <h3>Sábados y domingos</h3>
+              <div class="pa-price">$18.000 <small>/ hora</small></div>
+              <p>07:00 a 23:00 hs</p>
+              <a class="btn pa-btn pa-btn-dark" href="#reservas">Reservar</a>
+            </article>
+          </div>
+
+        </div>
+
+        <p class="text-center pa-pricing-note mt-4">
+          * Precios ficticios para el proyecto educativo. Se pueden reemplazar.
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         GALERÍA — el caso pedagógico más interesante
+         Bootstrap no puede hacer una grilla asimétrica
+         (1 foto grande a la izquierda que span 2 filas +
+         3 fotos chicas a la derecha) directamente.
+         
+         Solución: usamos Bootstrap para la columna principal
+         (col-lg-5 izquierda / col-lg-7 derecha) y adentro
+         de la columna derecha anidamos otra row de Bootstrap.
+         
+         La imagen grande ocupa el 100% de su columna con
+         height fija en el CSS. Las tres chicas se distribuyen
+         en dos filas dentro de la columna derecha.
+         
+         Esto es un buen ejemplo para mostrar en clase:
+         "Bootstrap da la estructura de columnas; el CSS custom
+         define las alturas específicas del layout de galería."
+         =================================================== -->
+    <section class="pa-section pa-gallery" id="galeria">
+      <div class="container">
+
+        <div class="row align-items-end mb-5">
+          <div class="col-lg-7">
+            <span class="pa-eyebrow">El espacio</span>
+            <h2>Conocé nuestras<br><span>instalaciones.</span></h2>
+          </div>
+          <div class="col-lg-5">
+            <p>Una galería simple para que los alumnos practiquen imágenes, grillas, enlaces y accesibilidad.</p>
+          </div>
+        </div>
+
+        <!-- Bootstrap: col-lg-5 (grande) + col-lg-7 (tres chicas)
+             El span de 2 filas lo maneja el CSS, no Bootstrap. -->
+        <div class="row g-3 pa-gallery-grid">
+
+          <!-- Imagen grande: ocupa toda la altura de la columna -->
+          <div class="col-lg-5">
+            <a class="pa-gallery-item pa-gallery-large" href="#contacto" aria-label="Cancha principal">
+              <div class="pa-gallery-photo pa-photo-1"></div>
+              <span>Cancha principal <i class="bi bi-arrow-up-right"></i></span>
+            </a>
+          </div>
+
+          <!-- Tres imágenes chicas: 2 arriba (col-6 cada una) + 1 abajo (col-12) -->
+          <div class="col-lg-7">
+            <div class="row g-3 h-100">
+
+              <div class="col-6">
+                <a class="pa-gallery-item pa-gallery-sm" href="#contacto" aria-label="Canchas cubiertas">
+                  <div class="pa-gallery-photo pa-photo-2"></div>
+                  <span>Canchas cubiertas <i class="bi bi-arrow-up-right"></i></span>
+                </a>
+              </div>
+
+              <div class="col-6">
+                <a class="pa-gallery-item pa-gallery-sm" href="#contacto" aria-label="Zona de descanso">
+                  <div class="pa-gallery-photo pa-photo-3"></div>
+                  <span>Zona de descanso <i class="bi bi-arrow-up-right"></i></span>
+                </a>
+              </div>
+
+              <div class="col-12">
+                <a class="pa-gallery-item pa-gallery-sm" href="#contacto" aria-label="Competencias">
+                  <div class="pa-gallery-photo pa-photo-4"></div>
+                  <span>Competencias <i class="bi bi-arrow-up-right"></i></span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         RESERVAS
+         Bootstrap: row align-items-center g-5,
+           col-lg-7, col-lg-5, w-100
+         Custom: pa-reservation, pa-reservation-box,
+           pa-reservation-step
+         =================================================== -->
+    <section class="pa-reservation" id="reservas">
+      <div class="container">
+        <div class="row align-items-center g-5">
+
+          <div class="col-lg-7">
+            <span class="pa-eyebrow pa-eyebrow-light">Reservas online</span>
+            <h2>Tu próxima partida<br><span>empieza acá.</span></h2>
+            <p>En esta primera versión la reserva es un ejemplo visual. Más adelante los alumnos podrán conectar este formulario con FastAPI y una base de datos.</p>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="pa-reservation-box">
+
+              <div class="pa-reservation-step">
+                <span>01</span>
+                <div>
+                  <strong>Elegí la cancha</strong>
+                  <small>Cancha 1 · 2 · 3 · 4</small>
+                </div>
+              </div>
+
+              <div class="pa-reservation-step">
+                <span>02</span>
+                <div>
+                  <strong>Seleccioná fecha y hora</strong>
+                  <small>Disponibilidad en tiempo real</small>
+                </div>
+              </div>
+
+              <div class="pa-reservation-step">
+                <span>03</span>
+                <div>
+                  <strong>Confirmá tu reserva</strong>
+                  <small>Próximamente conectado a FastAPI</small>
+                </div>
+              </div>
+
+              <button class="btn pa-btn pa-btn-primary w-100 mt-3" id="reservationDemo" type="button">
+                <i class="bi bi-calendar-plus"></i> Probar reserva
+              </button>
+              <p class="pa-demo-message" id="demoMessage" aria-live="polite"></p>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================================================
+         CONTACTO
+         Bootstrap: row g-5, col-lg-5, col-lg-7
+           form-control pa-input (inputs y textarea)
+           form-select pa-select (dropdown)
+           form-label pa-label
+           row g-3 mb-3, col-md-6
+         Custom: pa-contact, pa-form, pa-label, pa-input,
+           pa-contact-data, pa-wa
+         =================================================== -->
+    <section class="pa-section pa-contact" id="contacto">
+      <div class="container">
+        <div class="row g-5">
+
+          <!-- Info -->
+          <div class="col-lg-5">
+            <span class="pa-eyebrow">Contacto</span>
+            <h2>¿Tenés una consulta?<br><span>Hablemos.</span></h2>
+            <p>Este formulario funciona como maqueta estática. Más adelante puede conectarse con un endpoint de FastAPI.</p>
+
+            <div class="pa-contact-data">
+              <a href="mailto:info@padelalmagro.com.ar">
+                <i class="bi bi-envelope"></i> info@padelalmagro.com.ar
+              </a>
+              <span><i class="bi bi-geo-alt"></i> Almagro, CABA</span>
+              <span><i class="bi bi-clock"></i> Todos los días · 07:00 a 23:00</span>
+            </div>
+
+            <div class="pa-wa">
+              <i class="bi bi-whatsapp"></i>
+              <span>
+                <strong>WhatsApp</strong>
+                <small>Próximamente</small>
+              </span>
+            </div>
+          </div>
+
+          <!-- Formulario -->
+          <div class="col-lg-7">
+            <form class="pa-form" id="contactForm" novalidate>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label pa-label">Nombre</label>
+                  <input class="form-control pa-input" type="text" name="name"
+                         placeholder="Tu nombre" required minlength="3">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label pa-label">Email</label>
+                  <input class="form-control pa-input" type="email" name="email"
+                         placeholder="tu@email.com" required>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label pa-label">Asunto</label>
+                <select class="form-select pa-select" name="subject">
+                  <option value="">Seleccioná una opción</option>
+                  <option>Reserva de cancha</option>
+                  <option>Clases</option>
+                  <option>Torneos</option>
+                  <option>Eventos</option>
+                  <option>Otra consulta</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label pa-label">Mensaje</label>
+                <textarea class="form-control pa-input" name="message"
+                          rows="5" placeholder="¿En qué podemos ayudarte?"
+                          required minlength="10"></textarea>
+              </div>
+
+              <button class="btn pa-btn pa-btn-primary w-100" type="submit">
+                Enviar consulta <i class="bi bi-arrow-right"></i>
+              </button>
+              <p class="pa-form-message" id="formMessage" aria-live="polite"></p>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+       Bootstrap: row align-items-center g-3,
+         col-lg-4, text-center, text-lg-start, text-lg-end
+       ===================================================== -->
+  <footer class="pa-footer">
+    <div class="container">
+      <div class="row align-items-center text-center g-3">
+
+        <div class="col-lg-4 text-lg-start">
+          <a class="pa-brand" href="#inicio">
+            <span class="pa-brand-mark"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+            <span class="pa-brand-text">PADEL <strong>ALMAGRO</strong></span>
+          </a>
+        </div>
+
+        <div class="col-lg-4">
+          <p class="mb-0">© <span id="year"></span> Padel Almagro · Proyecto educativo IFTS N° 21</p>
+        </div>
+
+        <div class="col-lg-4 text-lg-end">
+          <div class="pa-footer-social">
+            <a href="#contacto" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#contacto" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#contacto" aria-label="Contacto"><i class="bi bi-envelope"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <button class="pa-back-to-top" id="backToTop" type="button" aria-label="Volver arriba">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+
+  <!-- =====================================================
+       Bootstrap 5 JS Bundle (incluye Popper)
+       Necesario para el navbar collapse en mobile.
+       ===================================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

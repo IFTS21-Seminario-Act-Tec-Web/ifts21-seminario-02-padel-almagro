@@ -1,0 +1,981 @@
+/* ============================================================
+   PADEL ALMAGRO — styles.css
+   Identidad visual personalizada sobre Bootstrap 5
+
+   Bootstrap provee la estructura (grid, navbar, botones,
+   formularios). Este archivo define quién ES esta marca:
+   verdes naturales, tipografía Manrope, estética de club
+   premium con fondo crema y toques de naturaleza.
+
+   Convención de nombres: clases propias con prefijo pa-
+   ============================================================ */
+
+
+/* ============================================================
+   1. VARIABLES Y BASE
+   ============================================================ */
+
+:root {
+  --pa-green-950: #0a1d13;
+  --pa-green-900: #0f2a1a;
+  --pa-green-800: #163c24;
+  --pa-green-700: #235a32;
+  --pa-green-600: #3e8b3d;
+  --pa-green-500: #72c64b;
+  --pa-green-400: #a4e16f;
+  --pa-cream:     #f5f7f2;
+  --pa-white:     #fff;
+  --pa-ink:       #111713;
+  --pa-muted:     #68736b;
+  --pa-line:      #dfe6df;
+  --pa-nav-h:     78px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--pa-nav-h);
+}
+
+body {
+  font-family: "DM Sans", Arial, sans-serif;
+  color: var(--pa-ink);
+  background: var(--pa-cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img { max-width: 100%; display: block; }
+
+
+/* ============================================================
+   2. ACCESIBILIDAD — Skip link
+   ============================================================ */
+
+.pa-skip-link {
+  position: fixed;
+  left: 16px;
+  top: -100px;
+  z-index: 9999;
+  background: var(--pa-green-500);
+  color: var(--pa-green-950);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: top .2s;
+}
+
+.pa-skip-link:focus { top: 16px; }
+
+
+/* ============================================================
+   3. NAVBAR
+   Transparente al inicio, verde oscuro al scrollear.
+   Bootstrap maneja el colapso mobile.
+   ============================================================ */
+
+.pa-navbar {
+  min-height: var(--pa-nav-h);
+  transition: background .3s ease, box-shadow .3s ease;
+  /* Sin background → transparente al inicio */
+}
+
+/* main.js agrega .scrolled cuando scrollY > 30 */
+.pa-navbar.scrolled {
+  background: rgba(10, 29, 19, .94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px rgba(0,0,0,.16);
+}
+
+/* ─── Marca ────────────────────────────────────────────── */
+.pa-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+  letter-spacing: .04em;
+  color: var(--pa-white);
+}
+
+.pa-brand-mark {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 50%;
+  color: var(--pa-green-400);
+}
+
+.pa-brand-text { font-size: 14px; }
+.pa-brand-text strong { color: var(--pa-green-400); }
+
+/* ─── Links del nav ─────────────────────────────────────── */
+.pa-nav-link {
+  position: relative;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,.82) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  transition: color .25s ease;
+}
+
+.pa-nav-link:hover,
+.pa-nav-link.active {
+  color: var(--pa-white) !important;
+}
+
+/* Subrayado verde animado */
+.pa-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: var(--pa-green-500);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+
+.pa-nav-link:hover::after,
+.pa-nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* ─── Botón CTA ─────────────────────────────────────────── */
+.pa-nav-cta {
+  background: var(--pa-green-500) !important;
+  color: var(--pa-green-950) !important;
+  padding: 11px 17px !important;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: background .2s;
+}
+
+.pa-nav-cta:hover { background: var(--pa-green-400) !important; }
+
+/* ─── Hamburguesa ───────────────────────────────────────── */
+.pa-toggler {
+  width: 44px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 10px;
+  background: rgba(255,255,255,.06);
+  cursor: pointer;
+  box-shadow: none !important;
+}
+
+.pa-toggler span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  margin: 4px auto;
+  background: var(--pa-white);
+}
+
+/* Menú mobile desplegado */
+@media (max-width: 991px) {
+  .pa-navbar .navbar-collapse {
+    background: rgba(10, 29, 19, .98);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    padding: 12px;
+    margin-top: 10px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.3);
+  }
+
+  .pa-nav-link {
+    padding: 12px !important;
+    display: block;
+  }
+
+  .pa-nav-link::after { display: none; }
+
+  .pa-nav-cta {
+    padding: 12px !important;
+    text-align: center;
+    display: block;
+    margin-top: 5px;
+  }
+}
+
+
+/* ============================================================
+   4. UTILIDADES COMPARTIDAS
+   ============================================================ */
+
+.pa-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--pa-green-700);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.pa-eyebrow-light { color: var(--pa-green-400); }
+
+/* Títulos de sección */
+.pa-services h2,
+.pa-highlight h2,
+.pa-pricing h2,
+.pa-gallery h2,
+.pa-reservation h2,
+.pa-contact h2 {
+  font-family: "Manrope", sans-serif;
+  line-height: 1.03;
+  letter-spacing: -.045em;
+  font-size: clamp(36px, 5vw, 62px);
+}
+
+.pa-services h2 span,
+.pa-highlight h2 span,
+.pa-pricing h2 span,
+.pa-gallery h2 span,
+.pa-reservation h2 span,
+.pa-contact h2 span {
+  color: var(--pa-green-500);
+}
+
+/* ─── Botones ───────────────────────────────────────────────
+   Bootstrap .btn provee la base funcional.
+   Nuestras clases pa-btn-* añaden la paleta de Padel Almagro.
+   ─────────────────────────────────────────────────────────── */
+.pa-btn {
+  min-height: 48px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 11px;
+  border: 0;
+  transition: transform .25s ease, background .25s ease;
+}
+
+.pa-btn:hover { transform: translateY(-2px); }
+
+.pa-btn-primary {
+  background: var(--pa-green-500);
+  color: var(--pa-green-950);
+  box-shadow: 0 12px 28px rgba(114,198,75,.2);
+}
+.pa-btn-primary:hover { background: var(--pa-green-400); color: var(--pa-green-950); }
+
+.pa-btn-outline {
+  border: 1px solid rgba(255,255,255,.38);
+  background: rgba(255,255,255,.04);
+  color: var(--pa-white);
+}
+.pa-btn-outline:hover { background: rgba(255,255,255,.12); color: var(--pa-white); }
+
+.pa-btn-dark { background: var(--pa-green-900); color: var(--pa-white); }
+.pa-btn-dark:hover { background: var(--pa-green-800); color: var(--pa-white); }
+
+
+/* ============================================================
+   5. HERO
+   ============================================================ */
+
+.pa-hero {
+  min-height: 760px;
+  height: 100svh;
+  max-height: 900px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--pa-white);
+  overflow: hidden;
+}
+
+.pa-hero-bg {
+  position: absolute;
+  inset: -4%;
+  background:
+    url("https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=2200&q=85")
+    center / cover no-repeat;
+  animation: pa-hero-zoom 18s ease-in-out infinite alternate;
+}
+
+.pa-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(4,18,10,.92) 0%, rgba(4,18,10,.70) 44%, rgba(4,18,10,.20) 100%),
+    linear-gradient(0deg, rgba(4,18,10,.65), transparent 45%);
+}
+
+@keyframes pa-hero-zoom {
+  from { transform: scale(1.02); }
+  to   { transform: scale(1.08); }
+}
+
+.pa-hero-content {
+  position: relative;
+  z-index: 2;
+  padding-top: calc(var(--pa-nav-h) + 10px);
+}
+
+.pa-hero h1 {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(50px, 7vw, 88px);
+  line-height: 1.03;
+  letter-spacing: -.045em;
+  margin-bottom: 22px;
+}
+
+.pa-hero h1 span { color: var(--pa-green-500); }
+
+.pa-hero p {
+  max-width: 620px;
+  color: rgba(255,255,255,.78);
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.pa-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+  margin-bottom: 52px;
+}
+
+.pa-hero-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.pa-hero-stats div { display: flex; flex-direction: column; }
+
+.pa-hero-stats strong {
+  font-family: "Manrope", sans-serif;
+  font-size: 24px;
+}
+
+.pa-hero-stats span {
+  color: rgba(255,255,255,.56);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+/* Tarjeta "¿Jugamos?" (columna derecha del hero) */
+.pa-hero-card {
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 22px;
+  background: rgba(9,28,17,.58);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 50px rgba(0,0,0,.2);
+}
+
+.pa-status {
+  display: block;
+  color: var(--pa-green-400);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 26px;
+}
+
+.pa-status i { font-size: 7px; margin-right: 5px; }
+
+.pa-hero-card strong {
+  display: block;
+  font-family: "Manrope", sans-serif;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.pa-hero-card > span:not(.pa-status) {
+  color: rgba(255,255,255,.65);
+  font-size: 13px;
+}
+
+.pa-hero-card a {
+  display: inline-flex;
+  gap: 7px;
+  margin-top: 24px;
+  color: var(--pa-green-400);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pa-scroll-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  z-index: 3;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: rgba(255,255,255,.55);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+
+/* ============================================================
+   6. SERVICIOS
+   ============================================================ */
+
+.pa-section { padding: 105px 0; }
+
+.pa-services { background: var(--pa-cream); }
+.pa-services p { color: var(--pa-muted); font-size: 14px; }
+
+.pa-service-card {
+  height: 100%;
+  padding: 28px;
+  border: 1px solid var(--pa-line);
+  border-radius: 22px;
+  background: var(--pa-white);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.pa-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(10,29,19,.09);
+}
+
+.pa-service-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #eef4ec;
+  color: var(--pa-green-700);
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.pa-service-card h3 {
+  font-family: "Manrope", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.pa-service-card p {
+  color: var(--pa-muted);
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.pa-service-card a {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pa-green-700);
+}
+
+.pa-service-card a:hover { color: var(--pa-green-600); }
+
+
+/* ============================================================
+   7. DESTACADO
+   ============================================================ */
+
+.pa-highlight {
+  padding: 105px 0;
+  background: var(--pa-white);
+}
+
+.pa-highlight-image {
+  min-height: 500px;
+  border-radius: 22px;
+  background:
+    url("https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=1200&q=85")
+    center / cover;
+}
+
+.pa-highlight p {
+  color: var(--pa-muted);
+  font-size: 14px;
+  margin: 20px 0 28px;
+}
+
+.pa-check-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  margin-bottom: 30px;
+}
+
+.pa-check-list li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pa-check-list li .bi { color: var(--pa-green-600); font-size: 15px; }
+
+.pa-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pa-green-700);
+}
+
+.pa-text-link:hover { color: var(--pa-green-600); }
+
+
+/* ============================================================
+   8. PRECIOS
+   ============================================================ */
+
+.pa-pricing { background: var(--pa-cream); }
+.pa-pricing p { color: var(--pa-muted); font-size: 14px; }
+
+.pa-price-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border: 1px solid var(--pa-line);
+  border-radius: 22px;
+  background: var(--pa-white);
+  height: 100%;
+}
+
+.pa-price-featured {
+  background: var(--pa-green-950);
+  color: var(--pa-white);
+  border-color: var(--pa-green-950);
+  transform: translateY(-8px);
+}
+
+.pa-popular {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--pa-green-500);
+  color: var(--pa-green-950);
+  padding: 5px 9px;
+  border-radius: 99px;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pa-price-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--pa-green-600);
+  margin-bottom: 8px;
+}
+
+.pa-price-featured .pa-price-label { color: var(--pa-green-400); }
+
+.pa-price-card h3 {
+  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.pa-price {
+  font-family: "Manrope", sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.pa-price small {
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--pa-muted);
+}
+
+.pa-price-featured .pa-price small { color: rgba(255,255,255,.5); }
+
+.pa-price-card > p {
+  color: var(--pa-muted);
+  font-size: 12px;
+  margin: 8px 0 25px;
+  flex: 1;
+}
+
+.pa-price-featured > p { color: rgba(255,255,255,.55); }
+
+.pa-pricing-note { color: var(--pa-muted); font-size: 11px; }
+
+
+/* ============================================================
+   9. GALERÍA
+   
+   CASO PEDAGÓGICO ESPECIAL:
+   Bootstrap no puede reproducir el layout asimétrico original
+   (grid-template-rows con span de filas) directamente.
+   
+   Solución: Bootstrap divide las dos columnas principales
+   (col-lg-5 izquierda / col-lg-7 derecha). Adentro de la
+   columna derecha hay otra row de Bootstrap con las 3 fotos.
+   Las alturas fijas son lo que hace Bootstrap + CSS custom.
+   
+   Esto se puede mostrar en clase como el límite de Bootstrap
+   y cuándo necesitamos salir de él.
+   ============================================================ */
+
+.pa-gallery { background: var(--pa-white); }
+.pa-gallery p { color: var(--pa-muted); font-size: 14px; }
+
+/* Imagen grande: ocupa la altura total de las 3 fotos chicas */
+.pa-gallery-large {
+  display: block;
+  height: 514px;  /* 2 × 250px + 14px gap (igual que el original) */
+}
+
+/* Cada foto chica */
+.pa-gallery-sm {
+  display: block;
+  height: 250px;
+}
+
+.pa-gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--pa-green-900);
+}
+
+/* Overlay oscuro al pie de cada foto */
+.pa-gallery-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(4,18,10,.76), transparent 55%);
+}
+
+.pa-gallery-photo {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  transition: transform .5s ease;
+}
+
+.pa-gallery-item:hover .pa-gallery-photo { transform: scale(1.06); }
+
+/* Una clase por foto para la imagen de fondo */
+.pa-photo-1 { background-image: url("https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=1200&q=85"); }
+.pa-photo-2 { background-image: url("https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&w=900&q=85"); }
+.pa-photo-3 { background-image: url("https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&w=900&q=85"); }
+.pa-photo-4 { background-image: url("https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=900&q=85"); }
+
+/* Etiqueta al pie de cada foto */
+.pa-gallery-item > span {
+  position: absolute;
+  z-index: 2;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--pa-white);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   10. RESERVAS
+   ============================================================ */
+
+.pa-reservation {
+  padding: 100px 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(114,198,75,.18), transparent 30%),
+    var(--pa-green-950);
+  color: var(--pa-white);
+}
+
+.pa-reservation h2 {
+  font-size: clamp(42px, 5vw, 62px);
+  margin-bottom: 20px;
+}
+
+.pa-reservation h2 span { color: var(--pa-green-400); }
+
+.pa-reservation p {
+  max-width: 570px;
+  color: rgba(255,255,255,.62);
+  font-size: 14px;
+}
+
+.pa-reservation-box {
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 24px;
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(8px);
+}
+
+.pa-reservation-step {
+  display: flex;
+  gap: 15px;
+  padding: 17px 0;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.pa-reservation-step > span {
+  color: var(--pa-green-400);
+  font-family: "Manrope", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.pa-reservation-step strong,
+.pa-reservation-step small { display: block; }
+
+.pa-reservation-step strong { font-size: 13px; }
+.pa-reservation-step small {
+  color: rgba(255,255,255,.45);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.pa-demo-message {
+  min-height: 20px;
+  color: var(--pa-green-400);
+  font-size: 11px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+/* ============================================================
+   11. CONTACTO
+   ============================================================ */
+
+.pa-contact { background: var(--pa-cream); }
+.pa-contact p { color: var(--pa-muted); font-size: 14px; }
+
+.pa-contact-data {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.pa-contact-data a,
+.pa-contact-data span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--pa-green-800);
+  font-size: 13px;
+}
+
+.pa-contact-data .bi { color: var(--pa-green-600); }
+
+.pa-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  margin-top: 28px;
+  padding: 12px 15px;
+  border: 1px dashed #b7c8b7;
+  border-radius: 14px;
+  color: #6f7b71;
+  background: #eef4ec;
+}
+
+.pa-wa .bi { font-size: 23px; color: #8aa78a; }
+.pa-wa small { display: block; font-size: 10px; color: #8a958b; }
+
+/* Formulario:
+   Bootstrap .form-control/.form-select proveen la base.
+   Sobreescribimos con la paleta de Padel Almagro. */
+.pa-form {
+  padding: 34px;
+  border: 1px solid var(--pa-line);
+  border-radius: 24px;
+  background: var(--pa-white);
+  box-shadow: 0 18px 50px rgba(10,29,19,.1);
+}
+
+.pa-label {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--pa-green-900) !important;
+  margin-bottom: 7px !important;
+}
+
+.pa-input {
+  padding: 13px 14px !important;
+  border-color: var(--pa-line) !important;
+  border-radius: 11px !important;
+  background: #fbfcfa !important;
+  font-size: 13px !important;
+  color: var(--pa-ink) !important;
+}
+
+.pa-input:focus {
+  border-color: var(--pa-green-600) !important;
+  box-shadow: 0 0 0 4px rgba(62,139,61,.1) !important;
+  background: var(--pa-white) !important;
+}
+
+.pa-select {
+  padding: 13px 14px !important;
+  border-color: var(--pa-line) !important;
+  border-radius: 11px !important;
+  background-color: #fbfcfa !important;
+  font-size: 13px !important;
+  color: var(--pa-ink) !important;
+}
+
+.pa-select:focus {
+  border-color: var(--pa-green-600) !important;
+  box-shadow: 0 0 0 4px rgba(62,139,61,.1) !important;
+}
+
+.pa-form-message {
+  text-align: center;
+  color: var(--pa-green-700);
+  font-size: 11px;
+  margin-top: 10px;
+  min-height: 18px;
+}
+
+
+/* ============================================================
+   12. FOOTER
+   ============================================================ */
+
+.pa-footer {
+  padding: 26px 0;
+  background: var(--pa-green-950);
+  color: rgba(255,255,255,.55);
+}
+
+.pa-footer p { font-size: 10px; }
+
+.pa-footer-social {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 991px) {
+  .pa-footer-social { justify-content: center; }
+}
+
+.pa-footer-social a {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+  color: rgba(255,255,255,.65);
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.pa-footer-social a:hover {
+  color: var(--pa-green-400);
+  border-color: var(--pa-green-500);
+}
+
+
+/* ============================================================
+   13. BOTÓN VOLVER ARRIBA
+   ============================================================ */
+
+.pa-back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 900;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--pa-green-600);
+  color: var(--pa-white);
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity .25s ease, visibility .25s ease, transform .25s ease;
+}
+
+.pa-back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   14. RESPONSIVE — complementa los breakpoints de Bootstrap
+   ============================================================ */
+
+@media (max-width: 991px) {
+  .pa-highlight-image { min-height: 420px; }
+  .pa-price-featured  { transform: none; }
+  .pa-check-list      { grid-template-columns: 1fr; }
+
+  /* Galería en tablet: las fotos chicas se apilan */
+  .pa-gallery-large { height: 380px; }
+  .pa-gallery-sm    { height: 200px; }
+}
+
+@media (max-width: 767px) {
+  .pa-section,
+  .pa-highlight,
+  .pa-reservation { padding: 75px 0; }
+
+  .pa-hero h1     { font-size: clamp(46px, 13vw, 66px); }
+  .pa-hero p      { font-size: 15px; }
+
+  .pa-hero-stats  { gap: 22px; }
+  .pa-hero-stats strong { font-size: 20px; }
+
+  .pa-hero-actions { flex-direction: column; }
+  .pa-hero-actions .btn { width: 100%; }
+
+  /* Galería en mobile: todas las fotos iguales */
+  .pa-gallery-large,
+  .pa-gallery-sm { height: 220px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
