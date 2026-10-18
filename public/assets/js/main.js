@@ -5,9 +5,10 @@
 //   1. Año dinámico en el footer
 //   2. Navbar: transparente → verde oscuro al scrollear
 //   3. Botón "volver arriba"
-//   4. Sección activa en el nav (IntersectionObserver)
-//   5. Demo de reserva
-//   6. Formulario de contacto con validación
+//   4. Cerrar el menú mobile al elegir una sección
+//   5. Sección activa en el nav (IntersectionObserver)
+//   6. Demo de reserva
+//   7. Formulario de contacto con validación
 //
 // Nota: el colapso del menú hamburguesa en mobile está
 // manejado por Bootstrap JS (bootstrap.bundle.min.js).
@@ -16,48 +17,118 @@
 "use strict";
 
 
-// ─── 1. AÑO DINÁMICO EN EL FOOTER ───────────────────────────
-
-document.getElementById('year').textContent = new Date().getFullYear();
-
-
-// ─── 2. NAVBAR: TRANSPARENTE → OSCURO AL SCROLLEAR ──────────
+// ─── 0. PREFERENCIA DE MOVIMIENTO REDUCIDO ──────────────────
 //
-// El navbar arranca sin background (transparente sobre la foto).
-// Al bajar 30px, el JS agrega .scrolled que activa el fondo
-// verde oscuro con blur (definido en styles.css).
+// Si el sistema operativo pide menos animaciones, el scroll
+// suave se desactiva (igual que hace el CSS con las
+// transiciones en @media prefers-reduced-motion).
 
-const siteNav   = document.getElementById('siteNav');
-const backToTop = document.getElementById('backToTop');
+const prefersReducedMotion =
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function updateScrollState() {
-  siteNav?.classList.toggle('scrolled', window.scrollY > 30);
-  backToTop?.classList.toggle('visible', window.scrollY > 450);
+const scrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+
+// ─── 1. AÑO DINÁMICO EN EL FOOTER ───────────────────────────
+//
+// Con ?. — sin el optional chaining, si el <span id="year">
+// no existiera este error cortaría la ejecución de TODO el
+// archivo y ninguna de las funciones de abajo se registraría.
+
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+
+
+
+
+
+// ─── 3. ACCESO FLOTANTE A WHATSAPP (cancha / clase) ──────────
+//
+// Reemplaza al botón "volver arriba". El botón verde abre un
+// menú con dos opciones y cada una arma su propio link a
+// wa.me con un mensaje distinto según el tipo de consulta.
+//
+// El tipo se define en el HTML con data-wa-tipo="cancha|clase".
+
+const WA_NUMERO = '5491159232537'; // 54 + 9 + código de área (sin 0) + número (sin 15)
+
+const WA_MENSAJES = {
+  cancha: 'Hola! Quiero consultar disponibilidad y precios para alquilar una cancha en Padel Almagro.',
+  clase:  'Hola! Quiero consultar por las clases de pádel en Padel Almagro (niveles, horarios y precios).'
+};
+
+const waFloat  = document.getElementById('waFloat');
+const waToggle = document.getElementById('waToggle');
+const waMenu   = document.getElementById('waMenu');
+
+function setWaMenu(abierto) {
+  waMenu.hidden = !abierto;
+  waToggle.setAttribute('aria-expanded', String(abierto));
 }
 
-window.addEventListener('scroll', updateScrollState, { passive: true });
+if (waFloat && waToggle && waMenu) {
 
-// Ejecutar al inicio para setear el estado correcto en carga
-updateScrollState();
+  // Armar el link de cada opción según su tipo de consulta
+  waMenu.querySelectorAll('[data-wa-tipo]').forEach(opcion => {
+    const mensaje = WA_MENSAJES[opcion.dataset.waTipo];
+    opcion.href = `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(mensaje)}`;
+  });
+
+  waToggle.addEventListener('click', () => setWaMenu(waMenu.hidden));
+
+  // Cerrar al hacer click afuera o con Escape
+  document.addEventListener('click', (e) => {
+    if (!waFloat.contains(e.target)) setWaMenu(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setWaMenu(false);
+  });
+}
 
 
-// ─── 3. BOTÓN "VOLVER ARRIBA" ────────────────────────────────
+// ─── 4. CERRAR EL MENÚ MOBILE AL ELEGIR UNA SECCIÓN ─────────
+//
+// Bootstrap abre el collapse pero no lo cierra al tocar un
+// link: el menú quedaba tapando la sección recién elegida.
+// Sólo cerramos si el collapse está efectivamente abierto,
+// es decir en mobile (en desktop nunca tiene la clase .show).
 
-backToTop?.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+const navCollapse = document.getElementById('navLinks');
+
+navCollapse?.addEventListener('click', (event) => {
+  if (!event.target.closest('a')) return;
+  if (!navCollapse.classList.contains('show')) return;
+
+  // bootstrap.Collapse existe porque el bundle se carga antes
+  // que este archivo. El getOrCreateInstance evita crear dos.
+  window.bootstrap?.Collapse
+    ?.getOrCreateInstance(navCollapse, { toggle: false })
+    ?.hide();
 });
 
 
-// ─── 4. SECCIÓN ACTIVA EN EL NAV (IntersectionObserver) ──────
+// ─── 5. SECCIÓN ACTIVA EN EL NAV (IntersectionObserver) ──────
 //
 // Resalta automáticamente el link del nav que corresponde
 // a la sección visible en pantalla.
 //
 // data-section en cada <a> del nav debe coincidir con el id
 // de la sección correspondiente.
+//
+// OJO: sólo observamos las secciones que TIENEN un link en el
+// nav. Antes se observaban todas las <section id>, así que al
+// pasar por #reservas (que no está en el menú) se borraban
+// todos los .active y el nav se quedaba sin nada resaltado.
 
 const navLinks = document.querySelectorAll('.pa-nav-link[data-section]');
-const sections = document.querySelectorAll('section[id]');
+
+const linkBySection = new Map();
+navLinks.forEach(link => linkBySection.set(link.dataset.section, link));
+
+const observedSections = [...linkBySection.keys()]
+  .map(id => document.getElementById(id))
+  .filter(Boolean);
 
 const observerOptions = {
   root: null,
@@ -69,26 +140,21 @@ const observerOptions = {
 
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
+    if (!entry.isIntersecting) return;
 
-      navLinks.forEach(link => link.classList.remove('active'));
+    const activeLink = linkBySection.get(entry.target.id);
+    if (!activeLink) return;
 
-      const activeLink = document.querySelector(
-        `.pa-nav-link[data-section="${entry.target.id}"]`
-      );
-
-      if (activeLink) {
-        activeLink.classList.add('active');
-        // .active dispara el subrayado verde animado (::after en CSS)
-      }
-    }
+    navLinks.forEach(link => link.classList.remove('active'));
+    activeLink.classList.add('active');
+    // .active dispara el subrayado verde animado (::after en CSS)
   });
 }, observerOptions);
 
-sections.forEach(section => sectionObserver.observe(section));
+observedSections.forEach(section => sectionObserver.observe(section));
 
 
-// ─── 5. DEMO DE RESERVA ──────────────────────────────────────
+// ─── 6. DEMO DE RESERVA ──────────────────────────────────────
 //
 // Simula una reserva con feedback visual y reset automático.
 // En la etapa de backend enviará a POST /api/reservas (FastAPI).
@@ -96,20 +162,31 @@ sections.forEach(section => sectionObserver.observe(section));
 const reservationDemo = document.getElementById('reservationDemo');
 const demoMessage     = document.getElementById('demoMessage');
 
+// Guardamos el id del timeout: si el usuario vuelve a apretar
+// antes de que termine, se cancela el anterior. Sin esto los
+// timeouts se acumulaban y el botón parpadeaba.
+let demoTimeoutId = null;
+
+const DEMO_LABEL_IDLE = '<i class="bi bi-calendar-plus" aria-hidden="true"></i> Probar reserva';
+const DEMO_LABEL_DONE = '<i class="bi bi-check2-circle" aria-hidden="true"></i> Demo realizada';
+
 reservationDemo?.addEventListener('click', () => {
+  clearTimeout(demoTimeoutId);
 
-  demoMessage.textContent = '¡Perfecto! Esta es una demo. En la próxima etapa este botón podrá consultar FastAPI y guardar la reserva en la base de datos.';
+  if (demoMessage) {
+    demoMessage.textContent = '¡Perfecto! Esta es una demo. En la próxima etapa este botón podrá consultar FastAPI y guardar la reserva en la base de datos.';
+  }
 
-  reservationDemo.innerHTML = '<i class="bi bi-check2-circle"></i> Demo realizada';
+  reservationDemo.innerHTML = DEMO_LABEL_DONE;
 
-  setTimeout(() => {
-    reservationDemo.innerHTML = '<i class="bi bi-calendar-plus"></i> Probar reserva';
-    demoMessage.textContent   = '';
+  demoTimeoutId = setTimeout(() => {
+    reservationDemo.innerHTML = DEMO_LABEL_IDLE;
+    if (demoMessage) demoMessage.textContent = '';
   }, 4500);
 });
 
 
-// ─── 6. FORMULARIO DE CONTACTO ───────────────────────────────
+// ─── 7. FORMULARIO DE CONTACTO ───────────────────────────────
 //
 // Validación nativa HTML5. Sin librerías externas.
 //
@@ -124,7 +201,9 @@ reservationDemo?.addEventListener('click', () => {
 // Ver: src/routes/contact.py (FastAPI router)
 
 const contactForm = document.getElementById('contactForm');
-const formMessage  = document.getElementById('formMessage');
+const formMessage = document.getElementById('formMessage');
+
+let formTimeoutId = null;
 
 contactForm?.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -134,7 +213,16 @@ contactForm?.addEventListener('submit', (event) => {
     return;
   }
 
-  formMessage.textContent = '✓ Mensaje preparado correctamente. En la etapa de backend se enviará a FastAPI.';
+  if (formMessage) {
+    clearTimeout(formTimeoutId);
+    formMessage.textContent = '✓ Mensaje preparado correctamente. En la etapa de backend se enviará a FastAPI.';
+
+    // El mensaje se limpia solo: antes quedaba fijo para siempre
+    // y no se notaba si mandabas una segunda consulta.
+    formTimeoutId = setTimeout(() => {
+      formMessage.textContent = '';
+    }, 6000);
+  }
 
   contactForm.reset();
 });
