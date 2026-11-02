@@ -188,24 +188,26 @@ reservationDemo?.addEventListener('click', () => {
 
 // ─── 7. FORMULARIO DE CONTACTO ───────────────────────────────
 //
-// Validación nativa HTML5. Sin librerías externas.
-//
-// PRÓXIMO PASO (etapa backend):
-//   const data = Object.fromEntries(new FormData(contactForm));
-//   const res  = await fetch('/api/contact', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(data)
-//   });
-//
-// Ver: src/routes/contact.py (FastAPI router)
+// Valida, envía los datos a FastAPI (POST /api/contact) y, si la
+// API responde bien, abre WhatsApp con el mensaje.
+// Los nombres de los campos (name, email, subject, message)
+// coinciden con el modelo Contacto de src/routes/contact.py.
+
+const API_URL = '/api/contact';
 
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
 let formTimeoutId = null;
 
-contactForm?.addEventListener('submit', (event) => {
+function mostrarAviso(texto, duracion = 6000) {
+  if (!formMessage) return;
+  clearTimeout(formTimeoutId);
+  formMessage.textContent = texto;
+  formTimeoutId = setTimeout(() => { formMessage.textContent = ''; }, duracion);
+}
+
+contactForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   if (!contactForm.checkValidity()) {
@@ -213,16 +215,54 @@ contactForm?.addEventListener('submit', (event) => {
     return;
   }
 
-  if (formMessage) {
-    clearTimeout(formTimeoutId);
-    formMessage.textContent = '✓ Mensaje preparado correctamente. En la etapa de backend se enviará a FastAPI.';
+  const data = Object.fromEntries(new FormData(contactForm));
 
-    // El mensaje se limpia solo: antes quedaba fijo para siempre
-    // y no se notaba si mandabas una segunda consulta.
-    formTimeoutId = setTimeout(() => {
-      formMessage.textContent = '';
-    }, 6000);
+  // El <select> no es "required" en el HTML, así que lo validamos acá
+  if (!data.subject) {
+    mostrarAviso('Elegí un asunto para tu consulta.');
+    return;
   }
 
-  contactForm.reset();
+  const boton = contactForm.querySelector('button[type="submit"]');
+  boton.disabled = true;
+
+  // Abrimos la pestaña ahora, dentro del click, porque si se abre
+  // después del await el navegador puede bloquearla como pop-up.
+  const ventanaWa = window.open('', '_blank');
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (!res.ok) {
+      ventanaWa?.close();
+      mostrarAviso(
+        res.status === 422
+          ? 'Revisá los datos: hay campos con formato inválido.'
+          : 'No pudimos enviar tu consulta. Probá de nuevo en un rato.'
+      );
+      return;
+    }
+
+    const texto = `Hola! Soy ${data.name}. Asunto: ${data.subject}. ${data.message}`;
+    const urlWa = `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`;
+
+    if (ventanaWa) {
+      ventanaWa.location.href = urlWa;
+    } else {
+      window.location.href = urlWa; // si el navegador bloqueó la pestaña
+    }
+
+    mostrarAviso('✓ Consulta enviada. Te abrimos WhatsApp para seguir la conversación.');
+    contactForm.reset();
+
+  } catch (error) {
+    ventanaWa?.close();
+    mostrarAviso('No se pudo conectar con el servidor. Verificá que la API esté encendida.');
+  } finally {
+    boton.disabled = false;
+  }
 });

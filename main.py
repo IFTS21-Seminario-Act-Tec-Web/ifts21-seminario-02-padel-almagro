@@ -12,20 +12,14 @@ StaticFiles se monta al final para no interceptar futuras rutas /api/*.
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
+from src.routes.contact import router as contact_router
+
 app = FastAPI(
     title="Padel Almagro",
     version="0.1.0",
 )
 
-# ------------------------------------------------------------
-# PRÓXIMO PASO
-# Importar aquí los routers creados por el equipo:
-#
-# from src.routes.reservas import router as reservas_router
-# app.include_router(reservas_router, prefix="/api")
-#
-# Más adelante esos endpoints se conectarán a la base de datos.
-# ------------------------------------------------------------
+app.include_router(contact_router, prefix="/api")
 
 # El frontend se monta ÚLTIMO.
 app.mount("/", StaticFiles(directory="public", html=True), name="frontend")
