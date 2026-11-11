@@ -71,3 +71,18 @@ uvicorn main:app --reload
 FastAPI servirá el mismo frontend desde `public/`. Los endpoints se agregarán en `src/routes/` a medida que avance el proyecto.
 
 > **Importante:** el código base no es una solución final. Las simulaciones y mensajes `PRÓXIMO PASO` están puestos intencionalmente para convertirse en tareas de sprint.
+## Diagrama entidad-relación (DER)
+
+![DER de Padel Almagro](docs/der-padel-almagro.png)
+
+### Entidades y relaciones
+
+- **Profesor** dicta **Clase** (1 profesor, N clases).
+- **Cancha** se usa en **Clase** y se reserva en **Reserva** (1 cancha, N clases y N reservas).
+- **Tarifa** se aplica a **Reserva** (1 tarifa, N reservas).
+- **Usuario** realiza **Reserva** (1 usuario, N reservas).
+- **Usuario** envía **Consulta**, de forma opcional (una consulta puede no tener usuario).
+- **Usuario** se anota a **Clase** mediante **Inscripción de clase** (relación N a N).
+- **Usuario** participa en **Torneo** mediante **Inscripción de torneo** (relación N a N).
+
+El script SQL que implementa este diagrama está en `db/schema.sql`, y los datos de prueba en `db/seed.sql`.
