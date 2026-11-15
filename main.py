@@ -14,6 +14,7 @@ from fastapi.staticfiles import StaticFiles
 
 from src.routes.contact import router as contact_router
 from src.routes.canchas import router as canchas_router
+from src.routes.reservas import router as reservas_router
 
 app = FastAPI(
     title="Padel Almagro",
@@ -22,6 +23,7 @@ app = FastAPI(
 
 app.include_router(contact_router, prefix="/api")
 app.include_router(canchas_router, prefix="/api")
+app.include_router(reservas_router, prefix="/api")
 
 # El frontend se monta ÚLTIMO.
 app.mount("/", StaticFiles(directory="public", html=True), name="frontend")
