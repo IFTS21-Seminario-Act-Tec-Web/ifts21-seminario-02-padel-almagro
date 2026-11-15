@@ -51,7 +51,7 @@ if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 //
 // El tipo se define en el HTML con data-wa-tipo="cancha|clase".
 
-const WA_NUMERO = '5491159232537'; // 54 + 9 + código de área (sin 0) + número (sin 15)
+const WA_NUMERO = '5491100000000'; // número de ejemplo (54 + 9 + código de área + número)
 
 const WA_MENSAJES = {
   cancha: 'Hola! Quiero consultar disponibilidad y precios para alquilar una cancha en Padel Almagro.',

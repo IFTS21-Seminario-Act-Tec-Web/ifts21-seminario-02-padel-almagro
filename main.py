@@ -13,7 +13,11 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from src.routes.contact import router as contact_router
+ feature/endpoint-usuarios
 from src.routes.usuarios import router as usuarios_router
+
+from src.routes.clases import router as clases_router
+ develop
 
 app = FastAPI(
     title="Padel Almagro",
@@ -21,7 +25,11 @@ app = FastAPI(
 )
 
 app.include_router(contact_router, prefix="/api")
+feature/endpoint-usuarios
 app.include_router(usuarios_router, prefix="/api")
+
+app.include_router(clases_router, prefix="/api")
+ develop
 
 # El frontend se monta ÚLTIMO.
 app.mount("/", StaticFiles(directory="public", html=True), name="frontend")
