@@ -13,6 +13,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from src.routes.contact import router as contact_router
+from src.routes.canchas import router as canchas_router
 from src.routes.clases import router as clases_router
 from src.routes.usuarios import router as usuarios_router
 
@@ -22,6 +23,7 @@ app = FastAPI(
 )
 
 app.include_router(contact_router, prefix="/api")
+app.include_router(canchas_router, prefix="/api")
 app.include_router(clases_router, prefix="/api")
 app.include_router(usuarios_router, prefix="/api")
 
